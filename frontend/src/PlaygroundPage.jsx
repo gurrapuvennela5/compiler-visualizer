@@ -1,4 +1,4 @@
-
+import Phase3Semantic from './phases/Phase3Semantic';
 import { useState } from 'react';
 import './PlaygroundPage.css';
 
@@ -19,7 +19,8 @@ function PlaygroundPage({ onHome }) {
     const [language, setLanguage] = useState('c');
     const [sourceCode, setSourceCode] = useState(initialCode);
     const [showQuiz, setShowQuiz] = useState(false);
-
+    const [semanticResult, setSemanticResult] = useState(null);
+    const [hasCompiled, setHasCompiled] = useState(false);
 
     const phase = phases.find((item) => item.id === activePhase);
 
@@ -135,7 +136,19 @@ function PlaygroundPage({ onHome }) {
                     </section>
 
                     {!showQuiz && (
-                        <section className="phase-workspace-empty" />
+                        <section className="phase-workspace">
+                            {activePhase === 'semantic' ? (
+                                <Phase3Semantic result={semanticResult} />
+                            ) : activePhase === 'intermediate' ? (
+                                <div className="phase-workspace-empty">
+                                    Phase 4 integration will be connected next.
+                                </div>
+                            ) : (
+                                <div className="phase-workspace-empty">
+                                    {phase.label} workspace will be connected next.
+                                </div>
+                            )}
+                        </section>
                     )}
 
 

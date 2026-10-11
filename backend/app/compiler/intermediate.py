@@ -101,7 +101,7 @@ class IntermediateCodeGenerator:
 
         # Declaration: int x = 10
         if kind in {"declaration", "vardecl", "variabledeclaration"}:
-            name = node.get("name")
+            name = node.get("name", node.get("variable"))
             initializer = (
                 node.get("initializer")
                 or node.get("init")

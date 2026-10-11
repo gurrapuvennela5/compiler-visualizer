@@ -2,6 +2,8 @@ import Phase3Semantic from './phases/Phase3Semantic';
 import { useState } from 'react';
 import ASTTree from './components/ASTTree.jsx';
 import './PlaygroundPage.css';
+import Phase4Intermediate from './phases/Phase4Intermediate';
+import './phases/Phase4Intermediate.css';
 
 const phases = [
     { id: 'lexer', number: '01', label: 'Lexical Analysis', short: 'Tokens', icon: '▤' },
@@ -339,7 +341,7 @@ function nextQuestion() {
                             </div>
                         )}
                     </section>
-                    {!showQuiz && activePhase === 'parser' && (
+                    {!showQuiz && (activePhase === 'parser' || activePhase === 'lexer') && (
     <section className="workspace-card source-editor-card">
         <div className="source-editor-header">
             <h2>Source Code</h2>
@@ -456,7 +458,83 @@ function nextQuestion() {
 
                 
     <section className="workspace-card phase-workspace">
-        {activePhase === 'parser' ? (
+        {activePhase === 'lexer' ? (
+    <div className="phase-content">
+        <h2>Lexical Analysis Output</h2>
+        <p>
+            The lexer converts your source code into tokens and records
+            each token's type and source position.
+        </p>
+
+        {compileError && (
+            <div className="lexer-errors" role="alert">
+                {compileError}
+            </div>
+        )}
+
+        {!hasCompiled ? (
+            <p>Enter source code and click Compile to view the tokens.</p>
+        ) : (
+            <>
+                {(compileResult?.errors ?? [])
+                    .filter((error) => error.phase === 'lexer')
+                    .map((error, index) => (
+                        <div
+                            className="lexer-errors"
+                            role="alert"
+                            key={`${error.type}-${index}`}
+                        >
+                            <strong>{error.type}</strong>: {error.message}
+                            {error.line != null &&
+    ` (Line ${error.line}, Column ${error.column ?? '?'})`}
+                        </div>
+                    ))}
+
+                <div className="lexer-result-heading">
+                    <h3>Token Stream</h3>
+                    <span>{(compileResult?.tokens ?? []).length} tokens</span>
+                </div>
+
+                <div className="lexer-table-wrapper">
+                    <table className="lexer-table">
+                        <thead>
+                            <tr>
+                                <th>Lexeme</th>
+                                <th>Token Type</th>
+                                <th>Line</th>
+                                <th>Column</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {(compileResult?.tokens ?? []).map((token, index) => (
+                                <tr
+                                    key={`${token.line}-${token.column}-${index}`}
+                                >
+                                    <td><code>{token.lexeme}</code></td>
+                                    <td>
+                                        <span className="lexer-token-type">
+                                            {token.token_type}
+                                        </span>
+                                    </td>
+                                    <td>{token.line}</td>
+                                    <td>{token.column}</td>
+                                </tr>
+                            ))}
+
+                            {!(compileResult?.tokens ?? []).length && (
+                                <tr>
+                                    <td colSpan={4} className="lexer-empty">
+                                        No tokens to display.
+                                    </td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+            </>
+        )}
+    </div>
+) : activePhase === 'parser' ? (
             <>
                 {/* Tabs appear only in Syntax Analysis */}
                 <div className="workspace-tabs">
@@ -565,16 +643,23 @@ function nextQuestion() {
                     </div>
                 )}
             </>
-        ) : (
-            /* Other phases do not show the Syntax Analysis tabs */
-            <div className="phase-content">
-                <h2>{phase.label}</h2>
-                <p>
-                    Explore {phase.label.toLowerCase()} here. This phase's
-                    content can be connected when its module is ready.
-                </p>
-            </div>
-        )}
+        ) : activePhase === 'semantic' ? (
+    <Phase3Semantic
+        result={hasCompiled ? compileResult?.semantic ?? null : null}
+    />
+) : activePhase === 'intermediate' ? (
+    <Phase4Intermediate
+        compileResult={hasCompiled ? compileResult : null}
+    />
+) : (
+    <div className="phase-content">
+        <h2>{phase.label}</h2>
+        <p>
+            Explore {phase.label.toLowerCase()} here.
+        </p>
+    </div>
+)
+        }
     </section>
 )}
 

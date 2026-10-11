@@ -123,3 +123,81 @@ def test_assignment():
     assert statement["type"] == "Assignment"
     assert statement["variable"] == "a"
     assert statement["value"]["value"] == 20
+
+def test_missing_semicolon():
+    data = {
+        "tokens": [
+            {"token_type": "KEYWORD", "lexeme": "int", "line": 1, "column": 1},
+            {"token_type": "IDENTIFIER", "lexeme": "a", "line": 1, "column": 5},
+            {"token_type": "OPERATOR", "lexeme": "=", "line": 1, "column": 7},
+            {"token_type": "INTEGER_LITERAL", "lexeme": "10", "line": 1, "column": 9},
+        ]
+    }
+
+    result = parse_tokens(data)
+
+    assert result["ast"] is None
+    assert result["errors"][0]["type"] == "missing_semicolon"
+    assert result["errors"][0]["line"] == 1
+
+
+def test_missing_variable_name():
+    data = {
+        "tokens": [
+            {"token_type": "KEYWORD", "lexeme": "int", "line": 1, "column": 1},
+            {"token_type": "OPERATOR", "lexeme": "=", "line": 1, "column": 5},
+        ]
+    }
+
+    result = parse_tokens(data)
+
+    assert result["ast"] is None
+    assert result["errors"][0]["type"] == "expected_identifier"
+
+
+def test_incomplete_expression():
+    data = {
+        "tokens": [
+            {"token_type": "IDENTIFIER", "lexeme": "a", "line": 1, "column": 1},
+            {"token_type": "OPERATOR", "lexeme": "=", "line": 1, "column": 3},
+            {"token_type": "INTEGER_LITERAL", "lexeme": "10", "line": 1, "column": 5},
+            {"token_type": "OPERATOR", "lexeme": "+", "line": 1, "column": 8},
+            {"token_type": "PUNCTUATION", "lexeme": ";", "line": 1, "column": 10},
+        ]
+    }
+
+    result = parse_tokens(data)
+
+    assert result["ast"] is None
+    assert result["errors"][0]["type"] == "expected_expression"
+    assert result["errors"][0]["line"] == 1
+
+
+def test_unexpected_token_at_start():
+    data = {
+        "tokens": [
+            {"token_type": "PUNCTUATION", "lexeme": ";", "line": 1, "column": 1}
+        ]
+    }
+
+    result = parse_tokens(data)
+
+    assert result["ast"] is None
+    assert result["errors"][0]["type"] == "unexpected_token"
+
+
+def test_missing_closing_parenthesis():
+    data = {
+        "tokens": [
+            {"token_type": "IDENTIFIER", "lexeme": "a", "line": 1, "column": 1},
+            {"token_type": "OPERATOR", "lexeme": "=", "line": 1, "column": 3},
+            {"token_type": "PUNCTUATION", "lexeme": "(", "line": 1, "column": 5},
+            {"token_type": "INTEGER_LITERAL", "lexeme": "10", "line": 1, "column": 6},
+            {"token_type": "PUNCTUATION", "lexeme": ";", "line": 1, "column": 8},
+        ]
+    }
+
+    result = parse_tokens(data)
+
+    assert result["ast"] is None
+    assert result["errors"][0]["type"] == "unexpected_token"

@@ -261,3 +261,4 @@ def parse_tokens(data):
                 "column": exc.column
             }]
         }
+

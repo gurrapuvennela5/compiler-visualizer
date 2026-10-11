@@ -1,0 +1,101 @@
+
+.ast-tree-container {
+    width: 100%;
+    overflow: auto;
+    padding: 24px 12px;
+}
+
+.ast-tree,
+.ast-children {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ast-tree > .ast-node {
+    padding-top: 0;
+}
+
+.ast-node {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 8px 0;
+    text-align: center;
+}
+
+.ast-children > .ast-node::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 24px;
+    left: 50%;
+    border-left: 2px solid #cbd5e1;
+}
+
+.ast-children {
+    position: relative;
+    padding-top: 24px;
+}
+
+.ast-children::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    border-top: 2px solid #cbd5e1;
+}
+
+.ast-node-label {
+    min-width: 100px;
+    max-width: 220px;
+    padding: 10px 14px;
+    border: 1px solid #dbeafe;
+    border-radius: 10px;
+    background: #eff6ff;
+    color: #1d4ed8;
+    font-size: 13px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    box-shadow: 0 3px 10px rgb(15 23 42 / 6%);
+}
+
+.ast-Program {
+    background: #dbeafe;
+}
+
+.ast-VariableDeclaration {
+    background: #d1fae5;
+    border-color: #a7f3d0;
+    color: #047857;
+}
+
+.ast-BinaryExpression {
+    background: #dbeafe;
+}
+
+.ast-Identifier {
+    background: #f3e8ff;
+    border-color: #e9d5ff;
+    color: #7e22ce;
+}
+
+.ast-IntegerLiteral,
+.ast-FloatLiteral {
+    background: #fef3c7;
+    border-color: #fde68a;
+    color: #92400e;
+}
+
+.ast-empty {
+    padding: 40px 20px;
+    text-align: center;
+    color: #64748b;
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+}

@@ -1,4 +1,4 @@
-
+import Phase3Semantic from './phases/Phase3Semantic';
 import { useState } from 'react';
 import ASTTree from './components/ASTTree.jsx';
 import './PlaygroundPage.css';
@@ -90,16 +90,15 @@ function PlaygroundPage({ onHome }) {
     const [sourceCode, setSourceCode] = useState(initialCode);
     const [showQuiz, setShowQuiz] = useState(false);
     const [compileResult, setCompileResult] = useState(null);
+    const [semanticResult, setSemanticResult] = useState(null);
     const [hasCompiled, setHasCompiled] = useState(false);
     const [isCompiling, setIsCompiling] = useState(false);
-const [compileError, setCompileError] = useState('');
-    
+    const [compileError, setCompileError] = useState('');
+
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [quizScore, setQuizScore] = useState(0);
     const [quizFinished, setQuizFinished] = useState(false);
-
-
 
     const phase = phases.find((item) => item.id === activePhase);
 
@@ -340,11 +339,11 @@ function nextQuestion() {
                             </div>
                         )}
                     </section>
-                    
-{!showQuiz && activePhase === 'parser' && (
+                    {!showQuiz && activePhase === 'parser' && (
     <section className="workspace-card source-editor-card">
         <div className="source-editor-header">
             <h2>Source Code</h2>
+
 
             <button
                 type="button"
@@ -375,13 +374,10 @@ function nextQuestion() {
         </div>
     </section>
 )}
-
-
-                    {/* {!showQuiz && (
-                        <section className="phase-workspace-empty" />
-                    )} */}
                     
 
+
+                  
 
 {showQuiz ? (
     <section className="workspace-card phase-workspace quiz-panel">
@@ -403,9 +399,7 @@ function nextQuestion() {
                 <p className="quiz-progress">
                     Question {currentQuestion + 1} of {quizQuestions.length}
                 </p>
-
                 <h2>{quizQuestions[currentQuestion].question}</h2>
-
                 <div className="quiz-options">
                     {quizQuestions[currentQuestion].options.map(
                         (option, index) => (
@@ -417,7 +411,6 @@ function nextQuestion() {
                                 disabled={selectedAnswer !== null}
                                 onClick={() => {
                                     setSelectedAnswer(index);
-
                                     if (
                                         index ===
                                         quizQuestions[currentQuestion].answer
@@ -431,7 +424,6 @@ function nextQuestion() {
                         )
                     )}
                 </div>
-
                 {selectedAnswer !== null && (
                     <div className="quiz-feedback">
                         <p>
@@ -442,11 +434,9 @@ function nextQuestion() {
                                     : 'Not quite!'}
                             </strong>
                         </p>
-
                         <p>
                             {quizQuestions[currentQuestion].explanation}
                         </p>
-
                         <button
                             className="compile-button"
                             onClick={nextQuestion}
@@ -461,6 +451,10 @@ function nextQuestion() {
         )}
     </section>
 ) : (
+
+
+
+                
     <section className="workspace-card phase-workspace">
         {activePhase === 'parser' ? (
             <>

@@ -1,0 +1,344 @@
+
+.semantic-panel {
+    width: 100%;
+    min-width: 0;
+    color: #e6f1f5;
+    background: #101b29;
+    border: 1px solid #263b4b;
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.semantic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 26px;
+    border-bottom: 1px solid #263b4b;
+}
+
+.semantic-eyebrow {
+    color: #55d6be;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.6px;
+}
+
+.semantic-header h2 {
+    margin: 9px 0;
+    color: #f2f8fc;
+    font-size: 24px;
+}
+
+.semantic-header p {
+    margin: 0;
+    color: #9bb0bf;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.semantic-status {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-idle {
+    color: #b8c9d8;
+    background: #263849;
+}
+
+.status-success {
+    color: #70e4bd;
+    background: #153b35;
+}
+
+.status-error {
+    color: #ffaaa9;
+    background: #47252e;
+}
+
+.semantic-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 12px 20px 0;
+    border-bottom: 1px solid #263b4b;
+    overflow-x: auto;
+}
+
+.semantic-tabs button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 15px;
+    color: #9bb0bf;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.semantic-tabs button:hover {
+    color: #e6f1f5;
+}
+
+.semantic-tabs button.active {
+    color: #65e0c6;
+    border-bottom-color: #55d6be;
+}
+
+.semantic-count {
+    display: inline-grid;
+    place-items: center;
+    min-width: 21px;
+    height: 21px;
+    padding: 0 5px;
+    border-radius: 999px;
+    color: #d7e7ef;
+    background: #293d4e;
+    font-size: 11px;
+}
+
+.semantic-content {
+    padding: 22px;
+}
+
+.semantic-summary {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 22px;
+}
+
+.semantic-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 17px;
+    background: #172638;
+    border: 1px solid #293e50;
+    border-radius: 12px;
+}
+
+.semantic-stat span {
+    color: #a1b5c4;
+    font-size: 12px;
+}
+
+.semantic-stat strong {
+    color: #65e0c6;
+    font-size: 26px;
+}
+
+.semantic-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 220px;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.semantic-empty-icon {
+    color: #55d6be;
+    font-size: 32px;
+}
+
+.semantic-empty h3 {
+    margin: 14px 0 8px;
+    color: #e6f1f5;
+    font-size: 17px;
+}
+
+.semantic-empty p {
+    max-width: 440px;
+    margin: 0;
+    color: #9bb0bf;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.semantic-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #293e50;
+    border-radius: 12px;
+}
+
+.semantic-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
+}
+
+.semantic-table th {
+    padding: 14px;
+    color: #a9bfcc;
+    background: #192a3c;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    white-space: nowrap;
+}
+
+.semantic-table td {
+    padding: 15px 14px;
+    color: #d6e4eb;
+    border-top: 1px solid #293e50;
+    white-space: nowrap;
+}
+
+.semantic-table tbody tr:hover {
+    background: #172638;
+}
+
+.semantic-table code {
+    color: #70e4bd;
+    font-size: 13px;
+}
+
+.semantic-type {
+    padding: 4px 8px;
+    color: #91c9ff;
+    background: #1b344b;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.semantic-bool {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.semantic-bool.yes {
+    color: #70e4bd;
+    background: #153b35;
+}
+
+.semantic-bool.no {
+    color: #ffcc91;
+    background: #493522;
+}
+
+.semantic-errors {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.semantic-error-card {
+    padding: 17px;
+    background: #202633;
+    border: 1px solid #55343c;
+    border-left: 3px solid #f17c83;
+    border-radius: 10px;
+}
+
+.semantic-error-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.semantic-error-top strong {
+    color: #ffaaa9;
+    font-size: 13px;
+}
+
+.semantic-error-top span {
+    color: #b5c5d0;
+    font-size: 12px;
+}
+
+.semantic-error-card p {
+    margin: 12px 0;
+    color: #e4eaf0;
+    font-size: 13px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.semantic-error-card small {
+    color: #9bb0bf;
+    font-size: 11px;
+}
+
+.semantic-learning {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.semantic-learning article {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+    background: #172638;
+    border: 1px solid #293e50;
+    border-radius: 12px;
+}
+
+.semantic-learning article > span {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    color: #65e0c6;
+    background: #153b35;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.semantic-learning h3 {
+    margin: 4px 0 8px;
+    color: #e6f1f5;
+    font-size: 14px;
+}
+
+.semantic-learning p {
+    margin: 0;
+    color: #9bb0bf;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+    .semantic-header {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .semantic-content {
+        padding: 15px;
+    }
+
+    .semantic-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .semantic-learning {
+        grid-template-columns: 1fr;
+    }
+
+    .semantic-tabs {
+        padding-inline: 10px;
+    }
+}

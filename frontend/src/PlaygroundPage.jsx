@@ -1,3 +1,4 @@
+import Phase2Parser from './phases/Phase2Parser';
 import Phase3Semantic from './phases/Phase3Semantic';
 import { useState } from 'react';
 import ASTTree from './components/ASTTree.jsx';
@@ -281,26 +282,7 @@ function nextQuestion() {
 
                     <div className="sidebar-divider" />
 
-                    <button
-                        className={`phase-nav utility-link ${showQuiz ? 'selected' : ''}`}
-                        onClick={startQuiz}
-                    >
-                        <span className="utility-icon">♜</span>
-                        <span>Quiz</span>
-                        <span className="nav-chevron">›</span>
-                    </button>
-
-                    <button
-                        className="phase-nav utility-link"
-                        onClick={() => {
-                            setShowQuiz(false);
-                            setActiveTab('learn');
-                        }}
-                    >
-                        <span className="utility-icon">▤</span>
-                        <span>Learn</span>
-                        <span className="nav-chevron">›</span>
-                    </button>
+                   
                 </aside>
 
                 <main className="workspace-main">
@@ -535,114 +517,14 @@ function nextQuestion() {
         )}
     </div>
 ) : activePhase === 'parser' ? (
-            <>
-                {/* Tabs appear only in Syntax Analysis */}
-                <div className="workspace-tabs">
-                    <button
-                        className={activeTab === 'output' ? 'active' : ''}
-                        onClick={() => setActiveTab('output')}
-                    >
-                        Output
-                    </button>
-
-                    <button
-                        className={
-                            activeTab === 'visualization' ? 'active' : ''
-                        }
-                        onClick={() => setActiveTab('visualization')}
-                    >
-                        Visualization
-                    </button>
-
-                    <button
-                        className={activeTab === 'learn' ? 'active' : ''}
-                        onClick={() => setActiveTab('learn')}
-                    >
-                        Learn
-                    </button>
-                </div>
-
-                {/* OUTPUT TAB */}
-                {activeTab === 'output' && (
-                    <div>
-                        <h2>Syntax Analysis Output</h2>
-
-                        {compileError && (
-                            <div className="parser-errors" role="alert">
-                                {compileError}
-                            </div>
-                        )}
-
-                        {!hasCompiled ? (
-                            <p>
-                                Enter your source code and click Compile to
-                                inspect the parser output.
-                            </p>
-                        ) : compileResult?.errors?.length > 0 ? (
-                            <div className="parser-errors">
-                                {compileResult.errors.map((error, index) => (
-                                    <p key={`${error.type}-${index}`}>
-                                        <strong>{error.type}</strong>:{' '}
-                                        {error.message}
-                                        {error.line != null &&
-                                            ` (Line ${error.line}, Column ${
-                                                error.column ?? '?'
-                                            })`}
-                                    </p>
-                                ))}
-                            </div>
-                        ) : (
-                            <p>
-                                Compilation response received. Open
-                                Visualization to inspect the AST.
-                            </p>
-                        )}
-                    </div>
-                )}
-
-                {/* VISUALIZATION TAB */}
-                {activeTab === 'visualization' && (
-                    <div>
-                        <h2>Abstract Syntax Tree (AST)</h2>
-                        {/* <ASTTree ast={compileResult?.ast} /> */}
-                        {compileError ? (
-    <div className="parser-errors">
-        Fix the compilation error to view the AST.
-    </div>
-) : compileResult?.errors?.length > 0 ? (
-    <div className="parser-errors">
-        Fix the syntax errors to view the AST.
-    </div>
-) : (
-    <ASTTree ast={compileResult?.ast || (!hasCompiled ? sampleAST : null)} />
-)}
-                    </div>
-                )}
-
-                {/* LEARN TAB */}
-                {activeTab === 'learn' && (
-                    <div>
-                        <h2>Syntax Analysis / AST</h2>
-
-                        <p>
-                            Syntax analysis checks whether the tokens follow
-                            the grammar rules of a programming language.
-                        </p>
-
-                        <p>
-                            An Abstract Syntax Tree (AST) represents the
-                            structure of a program as a tree. Operators and
-                            their operands become connected nodes.
-                        </p>
-
-                        <p>
-                            For example, in <code>a + b * 2</code>,
-                            multiplication is grouped before addition because
-                            it has higher precedence.
-                        </p>
-                    </div>
-                )}
-            </>
+           <Phase2Parser
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        hasCompiled={hasCompiled}
+        compileResult={compileResult}
+        compileError={compileError}
+        sampleAST={sampleAST}
+    />
         ) : activePhase === 'semantic' ? (
     <Phase3Semantic
         result={hasCompiled ? compileResult?.semantic ?? null : null}

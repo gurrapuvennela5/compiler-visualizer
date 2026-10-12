@@ -163,7 +163,7 @@ export default function Phase2Parser({
                         </div>
                     ) : (
                         <p>
-                            Compilation response received. Open
+                            Compilation response received. No errors found. Open
                             Visualization to inspect the AST.
                         </p>
                     )}

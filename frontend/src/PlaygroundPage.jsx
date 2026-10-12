@@ -5,12 +5,14 @@ import ASTTree from './components/ASTTree.jsx';
 import './PlaygroundPage.css';
 import Phase4Intermediate from './phases/Phase4Intermediate';
 import './phases/Phase4Intermediate.css';
+import Phase5Target from './phases/Phase5Target';
 
 const phases = [
     { id: 'lexer', number: '01', label: 'Lexical Analysis', short: 'Tokens', icon: '▤' },
     { id: 'parser', number: '02', label: 'Syntax Analysis / AST', short: 'AST', icon: '⑂' },
     { id: 'semantic', number: '03', label: 'Semantic Analysis', short: 'Symbol Table', icon: '▦' },
     { id: 'intermediate', number: '04', label: 'Intermediate Code & Optimization', short: 'TAC', icon: '</>' },
+    { id: 'target', number: '05', label: 'Target Code Generation', short: 'Assembly', icon: '⚙' },
 ];
 
 const initialCode = `int a = 10;
@@ -323,7 +325,7 @@ function nextQuestion() {
                             </div>
                         )}
                     </section>
-                    {!showQuiz && (activePhase === 'parser' || activePhase === 'lexer') && (
+                    {!showQuiz && (activePhase === 'parser' || activePhase === 'lexer'|| activePhase === 'target') && (
     <section className="workspace-card source-editor-card">
         <div className="source-editor-header">
             <h2>Source Code</h2>
@@ -532,6 +534,15 @@ function nextQuestion() {
 ) : activePhase === 'intermediate' ? (
     <Phase4Intermediate
         compileResult={hasCompiled ? compileResult : null}
+    />
+) : activePhase === 'target' ? (
+    <Phase5Target
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        compileResult={compileResult}
+        hasCompiled={hasCompiled}
+        compileError={compileError}
+        sourceCode={sourceCode}
     />
 ) : (
     <div className="phase-content">

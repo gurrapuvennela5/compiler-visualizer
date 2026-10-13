@@ -67,6 +67,7 @@
     padding: 12px 20px 0;
     border-bottom: 1px solid #263b4b;
     overflow-x: auto;
+    scrollbar-width: thin;
 }
 
 .semantic-tabs button {
@@ -318,6 +319,90 @@
     color: #9bb0bf;
     font-size: 12px;
     line-height: 1.7;
+}
+
+.semantic-diagnostics > h3 {
+    margin: 0 0 16px;
+    color: #e6f1f5;
+    font-size: 16px;
+}
+
+.semantic-quiz .quiz-content,
+.semantic-quiz .quiz-result {
+    padding: 12px;
+}
+
+.semantic-quiz .quiz-progress {
+    color: #65e0c6;
+}
+
+.semantic-quiz .quiz-content h2,
+.semantic-quiz .quiz-result h2 {
+    color: #e6f1f5;
+    line-height: 1.5;
+}
+
+.semantic-quiz .quiz-option {
+    border-color: #293e50;
+    background: #172638;
+    color: #d6e4eb;
+    line-height: 1.5;
+}
+
+.semantic-quiz .quiz-option:hover:not(:disabled),
+.semantic-quiz .quiz-option.selected {
+    border-color: #55d6be;
+    background: #1b3440;
+}
+
+.semantic-quiz .quiz-option.selected.correct {
+    border-color: #70e4bd;
+    background: #153b35;
+}
+
+.semantic-quiz .quiz-option.selected.incorrect {
+    border-color: #f17c83;
+    background: #47252e;
+}
+
+.semantic-quiz .quiz-feedback {
+    color: #d6e4eb;
+    line-height: 1.6;
+}
+
+.semantic-quiz .quiz-feedback p {
+    margin: 0 0 8px;
+}
+
+.semantic-quiz .quiz-feedback.correct {
+    background: #153b35;
+}
+
+.semantic-quiz .quiz-feedback.incorrect {
+    background: #47252e;
+}
+
+.semantic-quiz .quiz-feedback.correct strong {
+    color: #70e4bd;
+}
+
+.semantic-quiz .quiz-feedback.incorrect strong {
+    color: #ffaaa9;
+}
+
+.semantic-quiz .compile-button {
+    margin-top: 10px;
+    color: #101b29;
+    background: #65e0c6;
+}
+
+.semantic-quiz .quiz-result p {
+    color: #d6e4eb;
+}
+
+.semantic-quiz-result {
+    color: #70e4bd;
+    text-align: center;
 }
 
 @media (max-width: 700px) {

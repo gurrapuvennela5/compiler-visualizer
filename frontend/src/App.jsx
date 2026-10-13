@@ -89,7 +89,7 @@ function App() {
             <div>
               <h2>Learn</h2>
               <p>Understand key compiler concepts with simple explanations.</p>
-              <a href="#playground">Learn more →</a>
+            
             </div>
           </article>
 
@@ -98,7 +98,7 @@ function App() {
             <div>
               <h2>Visualize</h2>
               <p>See how your code is transformed at each stage.</p>
-              <a href="#playground">Explore →</a>
+           
             </div>
           </article>
 
@@ -107,7 +107,7 @@ function App() {
             <div>
               <h2>Practice</h2>
               <p>Reinforce your knowledge with examples and quizzes.</p>
-              <a href="#quiz">Start practicing →</a>
+            
             </div>
           </article>
         </section>

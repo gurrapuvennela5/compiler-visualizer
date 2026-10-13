@@ -31,15 +31,33 @@ function CodePanel({ title, instructions, optimized }) {
 
 export default function Phase4Intermediate({ compileResult }) {
   const [tab, setTab] = useState("Output");
-  const [answers, setAnswers] = useState({});
-  const [submitted, setSubmitted] = useState(false);
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [quizScore, setQuizScore] = useState(0);
+  const [quizFinished, setQuizFinished] = useState(false);
   const result = compileResult || {};
   const errors = Array.isArray(result.errors) ? result.errors : [];
   const original = Array.isArray(result.tac) ? result.tac : [];
   const optimized = Array.isArray(result.optimized_tac) ? result.optimized_tac : [];
   const records = Array.isArray(result.optimizations) ? result.optimizations : [];
   const failed = result.status === "error" || errors.length > 0;
-  const score = QUESTIONS.filter((q) => answers[q.id] === q.answer).length;
+
+  function startQuiz() {
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setQuizScore(0);
+    setQuizFinished(false);
+    setTab("Quiz");
+  }
+
+  function nextQuestion() {
+    if (currentQuestion === QUESTIONS.length - 1) {
+      setQuizFinished(true);
+    } else {
+      setCurrentQuestion((question) => question + 1);
+      setSelectedAnswer(null);
+    }
+  }
 
   return <main className="p4-page">
     <header className="p4-header">
@@ -58,7 +76,7 @@ export default function Phase4Intermediate({ compileResult }) {
     </div>}
 
     <nav className="p4-tabs">{["Output", "Visualization", "Learn", "Quiz"].map((name) =>
-      <button type="button" key={name} className={tab === name ? "active" : ""} onClick={() => setTab(name)}>{name}</button>)}</nav>
+      <button type="button" key={name} className={tab === name ? "active" : ""} onClick={() => name === "Quiz" ? startQuiz() : setTab(name)}>{name}</button>)}</nav>
 
     {tab === "Output" && <>
       <div className="p4-grid">
@@ -89,17 +107,40 @@ export default function Phase4Intermediate({ compileResult }) {
       <li><b>Comparison</b><p>Compare original TAC, optimized TAC, and transformation explanations.</p></li>
     </ol></section>}
 
-    {tab === "Quiz" && <section className="p4-card"><h3>Phase 4 Quiz</h3>
-      <p className="p4-muted">Answer all five questions.</p>
-      {QUESTIONS.map((q, i) => <fieldset className="p4-question" key={q.id}><legend>{i + 1}. {q.question}</legend>
-        {q.options.map((option) => <label className="p4-option" key={option}>
-          <input type="radio" name={q.id} checked={answers[q.id] === option} disabled={submitted}
-            onChange={() => setAnswers((old) => ({ ...old, [q.id]: option }))} />{option}
-        </label>)}
-        {submitted && <div className="p4-answer"><b>{answers[q.id] === q.answer ? "Correct" : `Correct answer: ${q.answer}`}</b><p>{q.explanation}</p></div>}
-      </fieldset>)}
-      {!submitted ? <button className="p4-primary" disabled={Object.keys(answers).length !== QUESTIONS.length} onClick={() => setSubmitted(true)}>Submit Quiz</button> :
-        <div className="p4-score">Score: {score} / {QUESTIONS.length} <button className="p4-primary" onClick={() => { setAnswers({}); setSubmitted(false); }}>Retry Quiz</button></div>}
+    {tab === "Quiz" && <section className="p4-card p4-quiz">
+      {quizFinished ? <div className="p4-quiz-result">
+        <h3>Quiz Completed!</h3>
+        <p>Your score: <strong>{quizScore} / {QUESTIONS.length}</strong></p>
+        <button type="button" className="p4-primary" onClick={startQuiz}>Try Again</button>
+      </div> : <div>
+        <p className="p4-quiz-progress">Question {currentQuestion + 1} of {QUESTIONS.length}</p>
+        <h3>{QUESTIONS[currentQuestion].question}</h3>
+        <div className="p4-quiz-options">
+          {QUESTIONS[currentQuestion].options.map((option, index) => {
+            const isSelected = selectedAnswer === index;
+            const isCorrect = option === QUESTIONS[currentQuestion].answer;
+            return <button
+              type="button"
+              key={option}
+              className={`p4-quiz-option${isSelected ? " selected" : ""}${isSelected && isCorrect ? " correct" : ""}${isSelected && !isCorrect ? " incorrect" : ""}`}
+              disabled={selectedAnswer !== null}
+              onClick={() => {
+                setSelectedAnswer(index);
+                if (isCorrect) setQuizScore((score) => score + 1);
+              }}
+            >
+              {String.fromCharCode(65 + index)}. {option}
+            </button>;
+          })}
+        </div>
+        {selectedAnswer !== null && <div className={`p4-answer ${QUESTIONS[currentQuestion].options[selectedAnswer] === QUESTIONS[currentQuestion].answer ? "" : "p4-answer-incorrect"}`}>
+          <b>{QUESTIONS[currentQuestion].options[selectedAnswer] === QUESTIONS[currentQuestion].answer ? "Correct!" : "Not quite!"}</b>
+          <p>{QUESTIONS[currentQuestion].explanation}</p>
+          <button type="button" className="p4-primary" onClick={nextQuestion}>
+            {currentQuestion === QUESTIONS.length - 1 ? "View Score" : "Next Question"}
+          </button>
+        </div>}
+      </div>}
     </section>}
 
     <footer className="p4-footer">Compiler Visualizer · Phase 4</footer>
